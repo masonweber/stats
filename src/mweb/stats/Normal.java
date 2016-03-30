@@ -5,6 +5,7 @@
  */
 package mweb.stats;
 
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -16,25 +17,44 @@ public class Normal {
     private double mean, variance, stdDev;
     //constructor
     public Normal(Set s) {
+        mean = mean(s);
+        System.out.println(mean);
+        variance = variance(s);
+        stdDev = standardDeviation(s);
         
     }
     //methods
-    private double mean() {
+    private double mean(Set s) {
+        Iterator iterator = s.iterator();
+        double sum = 0.0;
+        while (iterator.hasNext()) {
+            double d = (Double) iterator.next();
+            sum += d;
+        }
+        double result = sum / Double.valueOf(s.size());
         
-        return 0.0;
+        return result;
     }
     
-    private double variance() {
+    private double variance(Set s) {
         //take mean
-        
         //sum (x-u)^2
+        Iterator iterator = s.iterator();
+        double sum = 0.0;
+        while (iterator.hasNext()) {
+            double d = (Double) iterator.next();
+            sum += (mean - d);
+        }
+        sum = Math.pow(sum, 2);
         
         //divide by n-1
-        return 0.0;
+        Double result = sum / (Double.valueOf(s.size() - 1));
+        return result;
     }
     
-    private double standardDeviation() {
+    private double standardDeviation(Set s) {
         //square root of variance;
-        return 0.0;
+        Double result = Math.sqrt(variance);
+        return result;
     }
 }
